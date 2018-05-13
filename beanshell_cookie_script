@@ -1,0 +1,35 @@
+BeanShell post-processor scripts for saving cookies:
+
+import org.apache.jmeter.protocol.http.control.CookieManager;       
+        
+         CookieManager manager = ctx.getCurrentSampler().getProperty("HTTPSampler.cookie_manager").getObjectValue();
+         props.put("cookiecount", String.valueOf(manager.getCookieCount()));
+         for (int i = 0; i < manager.getCookieCount(); i++)        
+         {  
+            props.put("cookie_name" + i, manager.get(i).getName());
+            props.put("cookie_value" + i, manager.get(i).getValue());
+            props.put("cookie_domain" + i, manager.get(i).getDomain());
+            props.put("cookie_path" + i, manager.get(i).getPath());
+            props.put("cookie_expires" + i, String.valueOf(manager.get(i).getExpires()));
+            props.put("cookie_secure" + i, String.valueOf(manager.get(i).getSecure()));  
+         }         
+
+
+BeanShell pre-processor scripts for loading cookies:
+
+import org.apache.jmeter.protocol.http.control.CookieManager;
+import org.apache.jmeter.protocol.http.control.Cookie;
+import org.apache.jmeter.testelement.property.JMeterProperty;    
+
+CookieManager manager = ctx.getCurrentSampler().getProperty("HTTPSampler.cookie_manager").getObjectValue();;
+    int count = Integer.parseInt(props.getProperty("cookiecount"));
+    for (int i = 0; i < count; i++) {
+        Cookie cookie = new Cookie(props.getProperty("cookie_name" + i), 
+                props.getProperty("cookie_value" + i),
+                props.getProperty("cookie_domain" + i), 
+                props.getProperty("cookie_path" + i), false, -1l);
+        manager.add(cookie);
+    }
+
+JMeterProperty cookieprop = ctx.getCurrentSampler().getProperty("HTTPSampler.cookie_manager");
+cookieprop.setObjectValue(manager);
