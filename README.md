@@ -1,2 +1,2 @@
 # jmeter
-Repository for jmeter scripts.
+Repository for sample jmeter scripts.
