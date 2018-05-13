@@ -1,4 +1,4 @@
-# BeanShell post-processor scripts for saving cookies:
+BeanShell post-processor scripts for saving cookies:
 
 import org.apache.jmeter.protocol.http.control.CookieManager;       
         
@@ -14,7 +14,8 @@ import org.apache.jmeter.protocol.http.control.CookieManager;
             props.put("cookie_secure" + i, String.valueOf(manager.get(i).getSecure()));  
          }         
 
-# BeanShell pre-processor scripts for loading cookies:
+
+BeanShell pre-processor scripts for loading cookies:
 
 import org.apache.jmeter.protocol.http.control.CookieManager;
 import org.apache.jmeter.protocol.http.control.Cookie;
